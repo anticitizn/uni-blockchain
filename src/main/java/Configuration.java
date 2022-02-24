@@ -4,6 +4,7 @@ public enum Configuration {
 
     public final String userDirectory = System.getProperty("user.dir");
     public final String fileSeparator = System.getProperty("file.separator");
+    public final String pathRansomWareJavaArchive = userDirectory + fileSeparator + "ransomWare" + fileSeparator;
     public final String pathToFilesForEncryption = userDirectory + fileSeparator + "filesToEncrypt";
 
     public final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();

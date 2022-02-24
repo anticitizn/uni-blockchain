@@ -1,46 +1,41 @@
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.ECPoint;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Application {
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException {
 
-        System.out.println(Configuration.instance.pathToFilesForEncryption);
+        RansomWareController ransomWareController = new RansomWareController();
+        ClueLess clueLess = new ClueLess();
 
-        File folder = new File(Configuration.instance.pathToFilesForEncryption);
-        File[] listOfFiles = folder.listFiles();
+        ransomWareController.addSubscriber(clueLess);
+
+        ransomWareController.encryption();
+        ransomWareController.decryption();
 
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println(listOfFiles[i].getName());
 
-            } else if (listOfFiles[i].isDirectory()) {
-                System.out.println(listOfFiles[i].getName());
-            }
-        }
         System.out.println();
 
-
-
-        String originalString = "smart_home.txt";
-
-        String encryptedString = AES256.encrypt(originalString);
-        String decryptedString = AES256.decrypt(encryptedString);
-
-        System.out.println(originalString);
-        System.out.println(encryptedString);
-        System.out.println(decryptedString);
-
         Application application = new Application();
-        application.generateKeys();
+        //application.generateKeys();
 
         /*Scanner scanner = new Scanner(System.in);
 
@@ -58,6 +53,8 @@ public class Application {
 
 
     }
+
+
 
     private String adjustTo64(String string) {
         return switch (string.length()) {

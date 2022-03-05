@@ -4,14 +4,16 @@ import java.util.Objects;
 
 public class Block {
     private final String previousHash;
+    private final Blockchain blockchain;
     private final long timeStamp;
     private final ArrayList<Transaction> transactions = new ArrayList<>();
     private String merkleRoot;
     private String hash;
     private int nonce;
 
-    public Block(String previousHash) {
+    public Block(String previousHash, Blockchain blockchain) {
         this.previousHash = previousHash;
+        this.blockchain = blockchain;
         this.timeStamp = new Date().getTime();
         this.hash = calculateHash();
     }
@@ -32,7 +34,8 @@ public class Block {
         return StringUtility.applySha256(previousHash + timeStamp + nonce + merkleRoot);
     }
 
-    public void mineBlock(int difficulty) {
+    public void mineBlock() {
+        int difficulty = blockchain.getDifficulty();
         merkleRoot = StringUtility.getMerkleRoot(transactions);
         String target = StringUtility.getDifficultyString(difficulty);
 
@@ -50,7 +53,7 @@ public class Block {
         }
 
         if (!Objects.equals(previousHash, "0")) {
-            if (!transaction.processTransaction()) {
+            if (!blockchain.processTransaction(transaction)) {
                 System.out.println("transaction failed to process");
                 return;
             }

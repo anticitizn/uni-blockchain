@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,9 +31,26 @@ public class Application {
         ransomWareController.encryption();
         ransomWareController.decryption();
 
-
-
         System.out.println();
+
+        // S02 test
+        Blockchain blockchain = new Blockchain();
+
+        Wallet walletA = blockchain.getInitialWallet();
+        Wallet walletB = new Wallet(blockchain);
+
+        ArrayList<Miner> miners = new ArrayList<>();
+        miners.add(new Miner("Bob", blockchain));
+        miners.add(new Miner("Eve", blockchain));
+        miners.add(new Miner("Sam", blockchain));
+
+        Block block01 = blockchain.getNewBlock();
+        block01.addTransaction(walletA.sendFunds(walletB.getPublicKey(), 0.5f));
+
+        Random rand = new Random();
+        int n = rand.nextInt(3);
+
+        miners.get(n).mine(block01);
 
         Application application = new Application();
         //application.generateKeys();
@@ -50,7 +68,6 @@ public class Application {
         System.out.print("[defaultParkingSpaceID]      : ");
         int defaultParkingSpaceID = scanner.nextInt();
         System.out.println(defaultParkingSpaceID);*/
-
 
     }
 

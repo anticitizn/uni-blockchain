@@ -17,11 +17,5 @@ public enum Configuration {
     public final String MESSAGE_DIGEST_SHA_ALGORITHM = "SHA-256";
     public final String MESSAGE_DIGEST_MD5_ALGORITHM = "MD5";
 
-    Transaction genesisTransaction;
-    HashMap<String, TransactionOutput> utx0Map = new HashMap<>();
-    float minimumTransaction = 0.1f;
-    ArrayList<Block> blockchain = new ArrayList<>();
-    int difficulty = 4;
-    int transactionSequence = 0;
-
+    int difficulty = 3;
 }

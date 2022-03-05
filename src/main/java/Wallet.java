@@ -8,8 +8,10 @@ public class Wallet {
     public HashMap<String, TransactionOutput> utx0Map = new HashMap<>();
     private PrivateKey privateKey;
     private PublicKey publicKey;
+    private final Blockchain blockchain;
 
-    public Wallet() {
+    public Wallet(Blockchain blockchain) {
+        this.blockchain = blockchain;
         generateKeyPair();
     }
 
@@ -32,7 +34,7 @@ public class Wallet {
     public float getBalance() {
         float total = 0;
 
-        for (Map.Entry<String, TransactionOutput> item : Configuration.instance.utx0Map.entrySet()) {
+        for (Map.Entry<String, TransactionOutput> item : blockchain.getUTX0().entrySet()) {
             TransactionOutput utx0 = item.getValue();
             if (utx0.isMine(publicKey)) {
                 utx0Map.put(utx0.getID(), utx0);

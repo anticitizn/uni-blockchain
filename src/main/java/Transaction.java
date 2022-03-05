@@ -18,10 +18,9 @@ public class Transaction {
         this.inputs = inputs;
     }
 
-    private String calculateHash() {
-        Configuration.instance.transactionSequence++;
+    public String calculateHash(int transactionSequence) {
         return StringUtility.applySha256(StringUtility.getStringFromKey(sender) + StringUtility.getStringFromKey(recipient)
-                + value + Configuration.instance.transactionSequence);
+                + value + transactionSequence);
     }
 
     public void generateSignature(PrivateKey privateKey) {
@@ -33,40 +32,6 @@ public class Transaction {
         String data = StringUtility.getStringFromKey(sender) + StringUtility.getStringFromKey(recipient) + value;
         return !StringUtility.verifyECDSASig(sender, data, signature);
 
-    }
-
-    public boolean processTransaction() {
-        if (verifySignature()) {
-            System.out.println("#transaction signature failed to verify");
-            return false;
-        }
-
-        for (TransactionInput i : inputs) {
-            i.setUtx0(Configuration.instance.utx0Map.get(i.getId()));
-        }
-
-        if (getInputsValue() < Configuration.instance.minimumTransaction) {
-            System.out.println("#transaction input to small | " + getInputsValue());
-            return false;
-        }
-
-        float leftOver = getInputsValue() - value;
-        id = calculateHash();
-        outputs.add(new TransactionOutput(recipient, value, id));
-        outputs.add(new TransactionOutput(sender, leftOver, id));
-
-        for (TransactionOutput o : outputs) {
-            Configuration.instance.utx0Map.put(o.getID(), o);
-        }
-
-        for (TransactionInput i : inputs) {
-            if (i.getUTX0() == null) {
-                continue;
-            }
-            Configuration.instance.utx0Map.remove(i.getUTX0().getID());
-        }
-
-        return true;
     }
 
     public float getInputsValue() {

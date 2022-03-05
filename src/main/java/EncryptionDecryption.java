@@ -7,10 +7,10 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class ClueLess extends Subscriber{
+public class EncryptionDecryption extends Subscriber{
     private final ArrayList<Object> ransomWarePorts;
 
-    public ClueLess(){
+    public EncryptionDecryption(){
         ransomWarePorts = new ArrayList<>();
         build();
     }
@@ -18,7 +18,7 @@ public class ClueLess extends Subscriber{
 
         try{
                 URL[] urls = {new File(Configuration.instance.pathRansomWareJavaArchive + "report.jar").toURI().toURL()};
-                URLClassLoader urlClassLoader = new URLClassLoader(urls, ClueLess.class.getClassLoader());
+                URLClassLoader urlClassLoader = new URLClassLoader(urls, EncryptionDecryption.class.getClassLoader());
 
 
 

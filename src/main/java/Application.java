@@ -1,7 +1,6 @@
 import Blockchain.Block;
 import Blockchain.Blockchain;
 import Blockchain.Wallet;
-import Configuration.Configuration;
 import Person.Attacker;
 import Person.BankAccount;
 import Person.Miner;
@@ -13,23 +12,17 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.interfaces.ECPrivateKey;
-import java.security.interfaces.ECPublicKey;
-import java.security.spec.ECGenParameterSpec;
-import java.security.spec.ECPoint;
 import java.util.Scanner;
 import java.util.Timer;
 
 
 public class Application {
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) {
         Security.addProvider(new BouncyCastleProvider());
 
         Scanner scanner = new Scanner(System.in);
-        String input = "";
+        String input;
 
 
         do{

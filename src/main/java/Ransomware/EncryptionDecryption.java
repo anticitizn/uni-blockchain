@@ -10,6 +10,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+@SuppressWarnings("rawtypes")
 public class EncryptionDecryption extends Subscriber{
     private final ArrayList<Object> ransomWarePorts;
 

@@ -1,8 +1,5 @@
 package Configuration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public enum Configuration {
     instance;
 

@@ -14,8 +14,7 @@ public class Miner extends Person {
     }
 
     public void mine(Block block) {
-        Transaction transaction = new Transaction(blockchain.getCoinbase().getPublicKey(), wallet.getPublicKey(), blockchain.getMiningReward(), null);
-        block.addTransaction(transaction);
+        block.addTransaction(blockchain.getCoinbase().sendFunds(wallet.getPublicKey(), blockchain.getMiningReward()));
         block.mineBlock();
         blockchain.addBlock(block);
     }

@@ -27,6 +27,10 @@ public class Blockchain {
         );
 
         utx0Map.put(genesisTransaction.getOutputs().get(0).getID(), genesisTransaction.getOutputs().get(0));
+
+        Block genesisBlock = new Block("0", this);
+        genesisBlock.addTransaction(genesisTransaction);
+        addBlock(genesisBlock);
     }
 
     public HashMap<String, TransactionOutput> getUTX0() {
@@ -53,6 +57,7 @@ public class Blockchain {
     }
 
     public boolean processTransaction(Transaction transaction) {
+
         if (transaction.verifySignature()) {
             System.out.println("#transaction signature failed to verify");
             return false;

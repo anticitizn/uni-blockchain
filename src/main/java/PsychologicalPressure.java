@@ -14,7 +14,7 @@ public class PsychologicalPressure extends TimerTask {
 
     @Override
     public void run() {
-
+        pressureTask();
     }
 
     private void pressureTask(){

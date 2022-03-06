@@ -18,6 +18,7 @@ public class RansomWareController {
     public void decryption(){
         eventBus.post(new DecryptionEvent());
     }
+    public void delete(){eventBus.post(new DeleteEvent());}
 
 
 }

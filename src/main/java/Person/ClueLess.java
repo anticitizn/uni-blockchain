@@ -1,23 +1,12 @@
 package Person;
+import Blockchain.Wallet;
 
-public class ClueLess {
+public class ClueLess extends Person{
+    private final BankAccount bankAccount;
 
-    private String firstName;
-    private String lastName;
-    private BankAccount bankAccount;
-
-    public ClueLess(String firstName, String lastName, BankAccount bankAccount) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public ClueLess(String name, Wallet wallet, BankAccount bankAccount) {
+        super(name, wallet);
         this.bankAccount = bankAccount;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public BankAccount getBankAccount() {

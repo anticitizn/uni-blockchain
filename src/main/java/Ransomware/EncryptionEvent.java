@@ -1,3 +1,5 @@
+package Ransomware;
+
 public class EncryptionEvent {
     public EncryptionEvent(){
 

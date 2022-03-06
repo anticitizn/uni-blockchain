@@ -1,5 +1,8 @@
+package Blockchain;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import Configuration.Configuration;
 
 public class Blockchain {
     private HashMap<String, TransactionOutput> utx0Map = new HashMap<>();
@@ -14,8 +17,8 @@ public class Blockchain {
     private final int difficulty = Configuration.instance.difficulty;
     private int transactionSequence = 0;
 
-    public Blockchain() {
-        genesisTransaction = new Transaction(coinbase.getPublicKey(), initialWallet.getPublicKey(), 1f, null);
+    public Blockchain(float firstTransactionAmount) {
+        genesisTransaction = new Transaction(coinbase.getPublicKey(), initialWallet.getPublicKey(), firstTransactionAmount, null);
         genesisTransaction.generateSignature(coinbase.getPrivateKey());
         genesisTransaction.setId("0");
         genesisTransaction.getOutputs().add(

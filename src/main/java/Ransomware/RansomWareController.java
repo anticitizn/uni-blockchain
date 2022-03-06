@@ -1,3 +1,5 @@
+package Ransomware;
+
 import com.google.common.eventbus.EventBus;
 
 public class RansomWareController {

@@ -1,3 +1,5 @@
+package Configuration;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,5 +19,5 @@ public enum Configuration {
     public final String MESSAGE_DIGEST_SHA_ALGORITHM = "SHA-256";
     public final String MESSAGE_DIGEST_MD5_ALGORITHM = "MD5";
 
-    int difficulty = 3;
+    public int difficulty = 3;
 }

@@ -1,3 +1,7 @@
+package Blockchain;
+
+import Configuration.Configuration;
+
 import java.util.Arrays;
 
 public class Base58 {

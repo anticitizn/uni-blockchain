@@ -1,3 +1,6 @@
+package Ransomware;
+
+import Configuration.Configuration;
 import com.google.common.eventbus.Subscribe;
 
 import java.io.File;

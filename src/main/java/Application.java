@@ -30,10 +30,10 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
         String input;
 
-        do{
+        /*do{
             input = scanner.nextLine();
         }while(!(input.contains("launch") && input.contains("report.jar")));
-        report(scanner, input);
+        report(scanner, input);*/
 
         System.out.println();
 

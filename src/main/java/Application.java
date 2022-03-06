@@ -16,7 +16,6 @@ import java.security.*;
 import java.util.Scanner;
 import java.util.Timer;
 
-
 public class Application {
     public static void main(String... args) {
         Security.addProvider(new BouncyCastleProvider());
@@ -33,9 +32,9 @@ public class Application {
         System.out.println();
 
         // S02 test
-        Blockchain blockchain = new Blockchain(1.0f);
+        Blockchain blockchain = new Blockchain(21000000.0f);
 
-        Wallet walletA = blockchain.getInitialWallet();
+        Wallet walletA = blockchain.getCoinbase();
         Wallet walletB = new Wallet(blockchain);
 
         ArrayList<Miner> miners = new ArrayList<>();
@@ -55,7 +54,7 @@ public class Application {
     }
 
     public static void report(Scanner scanner, String input) {
-        Blockchain blockchain = new Blockchain(5.0f);
+        Blockchain blockchain = new Blockchain(21000000.0f);
 
         Attacker attacker = new Attacker("ed", new Wallet(blockchain));
         ClueLess clueLess= new ClueLess("ClueLess", new Wallet(blockchain), new BankAccount(5000));
@@ -106,7 +105,7 @@ public class Application {
 
         // ClueLess exchanges money for bitcoins
         clueLess.getBankAccount().setBalance(clueLess.getBankAccount().getBalance() - 1450);
-        blockchain.getInitialWallet().sendFunds(clueLess.getWallet().getPublicKey(), 0.0275f);
+        blockchain.getCoinbase().sendFunds(clueLess.getWallet().getPublicKey(), 0.0275f);
 
         do {
             input = scanner.nextLine();
@@ -139,12 +138,12 @@ public class Application {
     }
 
     public static void pressure(Scanner scanner, String input) {
-        Blockchain blockchain = new Blockchain(1.0f);
+        Blockchain blockchain = new Blockchain(21000000.0f);
 
         Attacker attacker = new Attacker("ed", new Wallet(blockchain));
         ClueLess clueLess= new ClueLess("ClueLess", new Wallet(blockchain), new BankAccount(5000));
 
-        blockchain.getInitialWallet().sendFunds(clueLess.getWallet().getPublicKey(), 1.0f);
+        blockchain.getCoinbase().sendFunds(clueLess.getWallet().getPublicKey(), 1.0f);
 
         RansomWareController ransomWareController = new RansomWareController();
         EncryptionDecryption encryptionDecryption = new EncryptionDecryption();

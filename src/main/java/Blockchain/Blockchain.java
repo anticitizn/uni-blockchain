@@ -9,8 +9,8 @@ public class Blockchain {
     private final ArrayList<Block> blockchain = new ArrayList<>();
 
     private Transaction genesisTransaction;
+    private final Wallet genesisWallet = new Wallet(this);
     private final Wallet coinbase = new Wallet(this);
-    private final Wallet initialWallet = new Wallet(this);
 
     private final float minimumTransaction = 0.001f;
     private final float miningReward = 0.025f;
@@ -18,7 +18,7 @@ public class Blockchain {
     private int transactionSequence = 0;
 
     public Blockchain(float firstTransactionAmount) {
-        genesisTransaction = new Transaction(coinbase.getPublicKey(), initialWallet.getPublicKey(), firstTransactionAmount, null);
+        genesisTransaction = new Transaction(genesisWallet.getPublicKey(), coinbase.getPublicKey(), firstTransactionAmount, null);
         genesisTransaction.generateSignature(coinbase.getPrivateKey());
         genesisTransaction.setId("0");
         genesisTransaction.getOutputs().add(
@@ -41,8 +41,8 @@ public class Blockchain {
         return coinbase;
     }
 
-    public Wallet getInitialWallet() {
-        return initialWallet;
+    public Wallet getGenesisWallet() {
+        return genesisWallet;
     }
     public float getMiningReward() {
         return miningReward;

@@ -8,6 +8,7 @@ import Person.Miner;
 import Person.ClueLess;
 import Ransomware.EncryptionDecryption;
 import Ransomware.RansomWareController;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -24,17 +25,15 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String... args) throws IOException {
-
+        Security.addProvider(new BouncyCastleProvider());
 
         Scanner scanner = new Scanner(System.in);
         String input;
 
         do{
-            input = scanner.next();
-            System.out.println(input);
+            input = scanner.nextLine();
         }while(!(input.contains("launch") && input.contains("report.jar")));
         report(scanner, input);
-
 
         System.out.println();
 
@@ -110,40 +109,35 @@ public class Application {
         System.out.println("Oops, your files have been encrypted. With a payment of 0.02755 BTC all files will be decrypted");
 
         do {
-            input = scanner.next();
-            System.out.println(input);
-        } while(!input.contains("exchange 0.02755BTC"));
+            input = scanner.nextLine();
+        } while(!input.contains("exchange btc"));
 
         // ClueLess exchanges money for bitcoins
         clueLess.getBankAccount().setBalance(clueLess.getBankAccount().getBalance() - 1450);
         blockchain.getInitialWallet().sendFunds(clueLess.getWallet().getPublicKey(), 0.0275f);
 
         do {
-            input = scanner.next();
-            System.out.println(input);
+            input = scanner.nextLine();
         } while(!input.contains("show balance"));
         System.out.println(clueLess.getBankAccount().getBalance());
         System.out.println(clueLess.getWallet().getBalance());
 
         do {
-            input = scanner.next();
-            System.out.println(input);
+            input = scanner.nextLine();
         } while(!input.contains("show recipient"));
         PublicKey attackerBitcoinAddress = attacker.getWallet().getPublicKey();
         System.out.println(attackerBitcoinAddress);
 
         do {
-            input = scanner.next();
-            System.out.println(input);
-        } while(!input.contains("pay 0.02755 BTC to "+ attackerBitcoinAddress));
+            input = scanner.nextLine();
+        } while(!input.contains("pay btc"));
 
         clueLess.getWallet().sendFunds(attackerBitcoinAddress, 0.0275f);
 
         transactionSuccessful = attacker.getWallet().getBalance() == 0.0275f;
 
         do {
-            input = scanner.next();
-            System.out.println(input);
+            input = scanner.nextLine();
         } while(!input.contains("check payment"));
 
         if(transactionSuccessful){

@@ -5,12 +5,12 @@ import java.util.HashMap;
 import Configuration.Configuration;
 
 public class Blockchain {
-    private HashMap<String, TransactionOutput> utx0Map = new HashMap<>();
-    private ArrayList<Block> blockchain = new ArrayList<>();
+    private final HashMap<String, TransactionOutput> utx0Map = new HashMap<>();
+    private final ArrayList<Block> blockchain = new ArrayList<>();
 
     private Transaction genesisTransaction;
-    private Wallet coinbase = new Wallet(this);
-    private Wallet initialWallet = new Wallet(this);
+    private final Wallet coinbase = new Wallet(this);
+    private final Wallet initialWallet = new Wallet(this);
 
     private final float minimumTransaction = 0.001f;
     private final float miningReward = 0.025f;
@@ -62,7 +62,7 @@ public class Blockchain {
             utx0Map.get(i.getId());
         }
 
-        if (transaction.getInputsValue() < minimumTransaction) {
+        if (transaction.getInputsValue() > minimumTransaction) {
             System.out.println("#transaction input too small | " + transaction.getInputsValue());
             return false;
         }

@@ -72,6 +72,8 @@ public class Wallet {
             utx0Map.remove(input.getId());
         }
 
+        blockchain.processTransaction(transaction);
+
         return transaction;
     }
 

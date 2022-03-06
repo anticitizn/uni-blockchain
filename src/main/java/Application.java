@@ -33,10 +33,10 @@ public class Application {
 
         pressure(scanner, input);
 
-        do{
+        /*do{
             input = scanner.nextLine();
         }while(!(input.contains("launch") && input.contains("report.jar")));
-        report(scanner, input);
+        report(scanner, input);*/
 
         System.out.println();
 
@@ -168,14 +168,21 @@ public class Application {
             input = scanner.nextLine();
         } while(!input.contains("pay btc") && psychologicalPressure.getCounter() < 5);
 
+        if (psychologicalPressure.getCounter() >= 5)
+        {
+            pressureTimer.cancel();
+            pressureTimer.purge();
+            return;
+        }
+
         float attackerOldBalance = attacker.getWallet().getBalance();
         clueLess.getWallet().sendFunds(attacker.getWallet().getPublicKey(), psychologicalPressure.getRansomAmount());
 
         if (attacker.getWallet().getBalance() >= attackerOldBalance + psychologicalPressure.getRansomAmount())
         {
+            ransomWareController.decryption();
             pressureTimer.cancel();
             pressureTimer.purge();
-            ransomWareController.decryption();
         }
     }
 

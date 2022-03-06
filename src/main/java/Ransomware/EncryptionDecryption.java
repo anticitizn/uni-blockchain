@@ -127,8 +127,8 @@ public class EncryptionDecryption extends Subscriber{
     public void receive(DeleteEvent deleteEvent){
         System.out.println("\n Delete Event \n");
 
-        try{
-            for(Object port : ransomWarePorts){
+        try {
+            for (Object port : ransomWarePorts) {
                 Method deleteMCGFile = port.getClass().getDeclaredMethod("deleteMCGFile");
                 deleteMCGFile.invoke(port);
             }

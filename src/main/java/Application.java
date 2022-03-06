@@ -32,7 +32,6 @@ public class Application {
         do{
             input = scanner.next();
             System.out.println(input);
-            System.out.println("!(input.contains(\"launch\") && input.contains(\"report.jar\")): "+ !(input.contains("launch") && input.contains("report.jar")));
         }while(!(input.contains("launch") && input.contains("report.jar")));
         report(scanner, input);
 
@@ -117,9 +116,40 @@ public class Application {
 
         // ClueLess exchanges money for bitcoins
         clueLess.getBankAccount().setBalance(clueLess.getBankAccount().getBalance() - 1450);
-        blockchain.getInitialWallet().sendFunds(clueLess.getWallet().getPublicKey(), 0.02755f);
+        blockchain.getInitialWallet().sendFunds(clueLess.getWallet().getPublicKey(), 0.0275f);
 
-        ransomWareController.decryption();
+        do {
+            input = scanner.next();
+            System.out.println(input);
+        } while(!input.contains("show balance"));
+        System.out.println(clueLess.getBankAccount().getBalance());
+        System.out.println(clueLess.getWallet().getBalance());
+
+        do {
+            input = scanner.next();
+            System.out.println(input);
+        } while(!input.contains("show recipient"));
+        PublicKey attackerBitcoinAddress = attacker.getWallet().getPublicKey();
+        System.out.println(attackerBitcoinAddress);
+
+        do {
+            input = scanner.next();
+            System.out.println(input);
+        } while(!input.contains("pay 0.02755 BTC to "+ attackerBitcoinAddress));
+
+        clueLess.getWallet().sendFunds(attackerBitcoinAddress, 0.0275f);
+
+        transactionSuccessful = attacker.getWallet().getBalance() == 0.0275f;
+
+        do {
+            input = scanner.next();
+            System.out.println(input);
+        } while(!input.contains("check payment"));
+
+        if(transactionSuccessful){
+            ransomWareController.decryption();
+        }
+
     }
 
 }

@@ -125,7 +125,7 @@ public class EncryptionDecryption extends Subscriber{
 
     @Subscribe
     public void receive(DeleteEvent deleteEvent){
-        System.out.println("\n Encryption Event \n");
+        System.out.println("\n Delete Event \n");
 
         try{
             for(Object port : ransomWarePorts){

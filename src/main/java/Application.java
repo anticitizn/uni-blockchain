@@ -21,6 +21,7 @@ import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.ECPoint;
 import java.util.Scanner;
+import java.util.Timer;
 
 
 public class Application {
@@ -28,12 +29,14 @@ public class Application {
         Security.addProvider(new BouncyCastleProvider());
 
         Scanner scanner = new Scanner(System.in);
-        String input;
+        String input = "";
 
-        /*do{
+        pressure(scanner, input);
+
+        do{
             input = scanner.nextLine();
         }while(!(input.contains("launch") && input.contains("report.jar")));
-        report(scanner, input);*/
+        report(scanner, input);
 
         System.out.println();
 
@@ -49,18 +52,15 @@ public class Application {
         miners.add(new Miner("Sam", blockchain));
 
         Block block01 = blockchain.getNewBlock();
-        block01.addTransaction(walletA.sendFunds(walletB.getPublicKey(), 0.5f));
+        block01.addTransaction(walletA.sendFunds(walletB.getPublicKey(), 1.0f));
 
         Random rand = new Random();
         int n = rand.nextInt(3);
 
         miners.get(n).mine(block01);
-
-        Application application = new Application();
-
     }
 
-    public static void report(Scanner scanner, String input){
+    public static void report(Scanner scanner, String input) {
         Blockchain blockchain = new Blockchain(5.0f);
 
         Attacker attacker = new Attacker("ed", new Wallet(blockchain));
@@ -144,6 +144,39 @@ public class Application {
             ransomWareController.decryption();
         }
 
+    }
+
+    public static void pressure(Scanner scanner, String input) {
+        Blockchain blockchain = new Blockchain(1.0f);
+
+        Attacker attacker = new Attacker("ed", new Wallet(blockchain));
+        ClueLess clueLess= new ClueLess("ClueLess", new Wallet(blockchain), new BankAccount(5000));
+
+        blockchain.getInitialWallet().sendFunds(clueLess.getWallet().getPublicKey(), 1.0f);
+
+        RansomWareController ransomWareController = new RansomWareController();
+        EncryptionDecryption encryptionDecryption = new EncryptionDecryption();
+
+        ransomWareController.addSubscriber(encryptionDecryption);
+        ransomWareController.encryption();
+
+        Timer pressureTimer = new Timer();
+        PsychologicalPressure psychologicalPressure = new PsychologicalPressure(0.02755f, ransomWareController);
+        pressureTimer.scheduleAtFixedRate(psychologicalPressure, 6000, 6000);
+
+        do {
+            input = scanner.nextLine();
+        } while(!input.contains("pay btc") && psychologicalPressure.getCounter() < 5);
+
+        float attackerOldBalance = attacker.getWallet().getBalance();
+        clueLess.getWallet().sendFunds(attacker.getWallet().getPublicKey(), psychologicalPressure.getRansomAmount());
+
+        if (attacker.getWallet().getBalance() >= attackerOldBalance + psychologicalPressure.getRansomAmount())
+        {
+            pressureTimer.cancel();
+            pressureTimer.purge();
+            ransomWareController.decryption();
+        }
     }
 
 }
